@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import BookingPage from './components/BookingPage';
+import DetailsPage from './components/DetailsPage';
 import ProcessingPage from './components/ProcessingPage';
 import SuccessPage from './components/SuccessPage';
 
@@ -8,15 +9,29 @@ function App() {
   const [currentPage, setCurrentPage] = useState(1);
   const [bookingDetails, setBookingDetails] = useState(null);
 
-  const handleConfirm = (details) => {
+  // Step 1 -> Step 2
+  const handleBookingSelect = (details) => {
     setBookingDetails(details);
     setCurrentPage(2);
   };
 
-  const handleProcessingComplete = () => {
+  // Step 2 -> Step 3
+  const handleDetailsSubmit = (userDetails) => {
+    setBookingDetails(prev => ({ ...prev, ...userDetails }));
     setCurrentPage(3);
   };
 
+  // Step 2 -> Step 1
+  const handleBackToBooking = () => {
+    setCurrentPage(1);
+  };
+
+  // Step 3 -> Step 4
+  const handleProcessingComplete = () => {
+    setCurrentPage(4);
+  };
+
+  // Step 4 -> Reset
   const handleReset = () => {
     setBookingDetails(null);
     setCurrentPage(1);
@@ -35,12 +50,27 @@ function App() {
             transition={{ duration: 0.3 }}
             className="absolute inset-0 overflow-y-auto"
           >
-            <BookingPage onConfirm={handleConfirm} />
+            <BookingPage onConfirm={handleBookingSelect} />
           </motion.div>
         )}
         {currentPage === 2 && (
           <motion.div
             key="page2"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.3 }}
+            className="absolute inset-0 overflow-y-auto"
+          >
+            <DetailsPage 
+                onSubmit={handleDetailsSubmit} 
+                onBack={handleBackToBooking} 
+            />
+          </motion.div>
+        )}
+        {currentPage === 3 && (
+          <motion.div
+            key="page3"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -50,9 +80,9 @@ function App() {
             <ProcessingPage onComplete={handleProcessingComplete} />
           </motion.div>
         )}
-        {currentPage === 3 && (
+        {currentPage === 4 && (
           <motion.div
-            key="page3"
+            key="page4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}

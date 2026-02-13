@@ -254,7 +254,7 @@ export default function BookingPage({ onConfirm }) {
                             : 'bg-white text-black hover:scale-[1.02] active:scale-[0.98]'
                         }`}
                         >
-                        CONFIRM BOOKING
+                        CONTINUE
                     </button>
                     {!selectedService && (
                         <p className="text-center text-xs text-white/40 mt-3">Select a service to proceed</p>

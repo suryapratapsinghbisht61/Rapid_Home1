@@ -2,29 +2,39 @@
 import { Check, MessageCircle, ArrowRight, Share2 } from 'lucide-react';
 
 export default function SuccessPage({ bookingDetails, onReset }) {
-  const { service, time, payment } = bookingDetails || {
+  const { service, time, payment, name, phone, address, city, pincode } = bookingDetails || {
     service: { name: 'Service' }, 
     time: 'Now', 
-    payment: 'Online' 
+    payment: 'Online',
+    name: '',
+    address: '',
+    city: ''
   };
 
   const bookingId = `RH-${Math.floor(10000 + Math.random() * 90000)}`;
 
+  const messageText = `Your Rapid Home booking is confirmed.
+Booking ID: ${bookingId}
+Name: ${name}
+Service: ${service.name}
+Time: ${time}
+Address: ${address}, ${city} ${pincode ? pincode : ''}
+Payment: ${payment === 'online' ? 'Paid' : 'Cash'}
+Helper will arrive within 15 minutes.`;
+
   const handleShare = async () => {
-    const text = `Hey! Here are the details for the request:\n\nService: ${service.name}\nTime: ${time}\nBooking ID: ${bookingId}\nStatus: Confirmed ✅`;
-    
     if (navigator.share) {
       try {
         await navigator.share({
           title: 'Rapid Home Booking',
-          text: text,
+          text: messageText,
         });
       } catch (err) {
         console.log('Share failed:', err);
       }
     } else {
       // Fallback to WhatsApp if Web Share API is not available
-      window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+      window.open(`https://wa.me/?text=${encodeURIComponent(messageText)}`, '_blank');
     }
   };
 
@@ -69,6 +79,10 @@ export default function SuccessPage({ bookingDetails, onReset }) {
                 {payment === 'online' ? 'Received' : 'Pending (Cash)'}
               </p>
             </div>
+            <div className="col-span-2 pt-2 border-t border-gray-50">
+                <p className="text-xs text-secondary mb-1">Location</p>
+                <p className="font-medium text-gray-800 truncate">{address}, {city}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -82,12 +96,10 @@ export default function SuccessPage({ bookingDetails, onReset }) {
         
         {/* Bubble */}
         <div className="relative bg-[#DCF8C6] p-4 rounded-2xl rounded-tl-none shadow-sm border border-green-100 mb-3 hover:bg-[#d4f5ba] transition-colors cursor-pointer"
-             onClick={() => window.open(`https://wa.me/918449659345?text=${encodeURIComponent(`Your Rapid Home booking is confirmed.\nBooking ID: ${bookingId}\nHelper will arrive within 15 minutes.\nService: ${service.name}`)}`, '_blank')}
+             onClick={() => window.open(`https://wa.me/918449659345?text=${encodeURIComponent(messageText)}`, '_blank')}
         >
-          <p className="text-sm text-gray-800 leading-relaxed font-medium">
-            Your Rapid Home booking is confirmed.<br/>
-            Booking ID: {bookingId}<br/>
-            Helper will arrive within 15 minutes.
+          <p className="text-sm text-gray-800 leading-relaxed font-medium whitespace-pre-wrap">
+            {messageText}
           </p>
           <span className="absolute bottom-2 right-3 text-[10px] text-gray-500 flex items-center gap-1">
             Tap to Send <Check className="h-3 w-3 inline text-gray-400" />
@@ -97,7 +109,7 @@ export default function SuccessPage({ bookingDetails, onReset }) {
         {/* Footer info */}
         <div className="flex items-center justify-center gap-2 text-xs text-secondary">
           <MessageCircle className="h-4 w-4 text-green-600 fill-current/20" />
-          <a href={`https://wa.me/918449659345?text=${encodeURIComponent(`Your Rapid Home booking is confirmed.\nBooking ID: ${bookingId}\nHelper will arrive within 15 minutes.\nService: ${service.name}`)}`} 
+          <a href={`https://wa.me/918449659345?text=${encodeURIComponent(messageText)}`} 
              target="_blank" 
              rel="noopener noreferrer"
              className="underline hover:text-green-700"
