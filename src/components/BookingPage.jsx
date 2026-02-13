@@ -7,26 +7,26 @@ import {
 import { Link } from 'react-router-dom';
 
 const services = [
-  { id: 'cleaning', name: 'Home Cleaning', icon: Sparkles },
-  { id: 'cooking', name: 'Cooking', icon: ChefHat },
-  { id: 'plumbing', name: 'Plumbing', icon: Wrench },
-  { id: 'electrician', name: 'Electrician', icon: Zap },
-  { id: 'laundry', name: 'Laundry', icon: Shirt },
-  { id: 'acrepair', name: 'AC Repair', icon: Thermometer },
-  { id: 'pestcontrol', name: 'Pest Control', icon: Bug },
-  { id: 'carpentry', name: 'Carpentry', icon: Hammer },
-  { id: 'painting', name: 'Painting', icon: PaintBucket },
-  { id: 'carcleaning', name: 'Car Cleaning', icon: Car },
-  { id: 'gardening', name: 'Gardening', icon: Shovel },
-  { id: 'disinfection', name: 'Disinfection', icon: SprayCan },
-  { id: 'homesalon', name: 'Home Salon', icon: Scissors },
-  { id: 'menshaircut', name: "Men's Haircut", icon: User },
-  { id: 'massagetherapy', name: 'Massage Therapy', icon: Heart },
-  { id: 'appliancerepair', name: 'Appliance Repair', icon: Monitor },
-  { id: 'driverondemand', name: 'Driver on Demand', icon: Car },
-  { id: 'elderlycare', name: 'Elderly Care', icon: Activity },
-  { id: 'physiotherapy', name: 'Physiotherapy', icon: Activity },
-  { id: 'petgrooming', name: 'Pet Grooming', icon: Dog },
+  { id: 'cleaning', name: 'Home Cleaning', icon: Sparkles, price: 1499 },
+  { id: 'cooking', name: 'Cooking', icon: ChefHat, price: 999 },
+  { id: 'plumbing', name: 'Plumbing', icon: Wrench, price: 499 },
+  { id: 'electrician', name: 'Electrician', icon: Zap, price: 999 },
+  { id: 'laundry', name: 'Laundry', icon: Shirt, price: 1199 },
+  { id: 'acrepair', name: 'AC Repair', icon: Thermometer, price: 999 },
+  { id: 'pestcontrol', name: 'Pest Control', icon: Bug, price: 499 },
+  { id: 'carpentry', name: 'Carpentry', icon: Hammer, price: 2999 },
+  { id: 'painting', name: 'Painting', icon: PaintBucket, price: 4999 },
+  { id: 'carcleaning', name: 'Car Cleaning', icon: Car, price: 699 },
+  { id: 'gardening', name: 'Gardening', icon: Shovel, price: 599 },
+  { id: 'disinfection', name: 'Disinfection', icon: SprayCan, price: 999 },
+  { id: 'homesalon', name: 'Home Salon', icon: Scissors, price: 1499 },
+  { id: 'menshaircut', name: "Men's Haircut", icon: User, price: 299 },
+  { id: 'massagetherapy', name: 'Massage Therapy', icon: Heart, price: 2499 },
+  { id: 'appliancerepair', name: 'Appliance Repair', icon: Monitor, price: 999 },
+  { id: 'driverondemand', name: 'Driver on Demand', icon: Car, price: 1799 },
+  { id: 'elderlycare', name: 'Elderly Care', icon: Activity, price: 2999 },
+  { id: 'physiotherapy', name: 'Physiotherapy', icon: Activity, price: 4499 },
+  { id: 'petgrooming', name: 'Pet Grooming', icon: Dog, price: 1899 },
 ];
 
 export default function BookingPage({ onConfirm }) {
@@ -241,7 +241,9 @@ export default function BookingPage({ onConfirm }) {
                         </div>
                         <div className="flex justify-between">
                              <span>Total</span>
-                             <span className="font-bold text-white">$25.00</span>
+                             <span className="font-bold text-white">
+                                {selectedService ? `₹${selectedService.price}` : '₹0'}
+                             </span>
                         </div>
                     </div>
 
