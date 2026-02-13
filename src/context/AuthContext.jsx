@@ -1,13 +1,5 @@
 
-import { createContext, useContext, useEffect, useState } from "react";
-import { 
-  GoogleAuthProvider, 
-  signInWithPopup, 
-  signInWithRedirect, 
-  signOut, 
-  onAuthStateChanged 
-} from "firebase/auth";
-import { auth } from "../firebase";
+import { createContext, useContext, useState, useEffect } from "react";
 
 const AuthContext = createContext();
 
@@ -19,36 +11,37 @@ export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Sign in with Google
-  const googleSignIn = () => {
-    const provider = new GoogleAuthProvider();
-    // Using popup as requested, fallback to redirect if popup blocked
-    return signInWithPopup(auth, provider).catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        console.error("Google Sign In Error", errorCode, errorMessage);
-    });
-  };
-
-  // Log out
-  const logOut = () => {
-    return signOut(auth);
-  };
-
-  // Monitor auth state changes
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user);
-      setLoading(false);
-    });
-
-    return unsubscribe;
+    // Check for saved user in local storage to persist session across refreshes (Simulation)
+    const storedUser = localStorage.getItem("rapid_home_user");
+    if (storedUser) {
+        setCurrentUser(JSON.parse(storedUser));
+    }
+    setLoading(false);
   }, []);
+
+  // MOCK Sign in with Google (Simulated for Demo)
+  const googleSignIn = () => {
+    setLoading(true);
+    // Simulate network delay
+    setTimeout(() => {
+        const mockUser = {
+            uid: "demo-123",
+            displayName: "Alex Johnson",
+            email: "alex@rapidhome.demo",
+            photoURL: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+        };
+        setCurrentUser(mockUser);
+        localStorage.setItem("rapid_home_user", JSON.stringify(mockUser));
+        setLoading(false);
+    }, 800); 
+  };
+
+  // MOCK Log out
+  const logOut = () => {
+    setCurrentUser(null);
+    localStorage.removeItem("rapid_home_user");
+  };
 
   const value = {
     currentUser,
