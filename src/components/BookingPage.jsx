@@ -63,7 +63,7 @@ export default function BookingPage({ onConfirm }) {
             <ArrowLeft className="h-6 w-6" />
         </Link>
         <div className="flex justify-center mb-1">
-           <img src="/logo.png" alt="Rapid Home" className="h-16 w-auto object-contain" />
+           <img src="/logo.png" alt="Rapid Home" className="w-[90px] h-[90px] object-contain" />
         </div>
         <p className="text-secondary text-base md:text-lg font-medium">Instant home services, delivered in minutes.</p>
       </header>
