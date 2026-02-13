@@ -84,8 +84,8 @@ const Navbar = () => {
       )}
     >
       <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-           <img src="/logo.png" alt="Rapid Home" className="w-[90px] h-[90px] object-contain" />
+        <div className="flex items-center gap-4">
+           <img src="/logo.png" alt="Rapid Home" className="w-[90px] h-[90px] object-contain -mt-3 -ml-3" />
         </div>
 
         {/* Desktop Nav */}
@@ -645,8 +645,8 @@ const Footer = () => {
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid md:grid-cols-4 gap-12 mb-16">
           <div className="col-span-1 md:col-span-2">
-            <div className="flex items-center gap-2 mb-6">
-               <img src="/logo.png" alt="Rapid Home" className="w-[90px] h-[90px] object-contain" />
+            <div className="flex items-center gap-4 mb-6">
+               <img src="/logo.png" alt="Rapid Home" className="w-[90px] h-[90px] object-contain -ml-3" />
             </div>
             <p className="text-gray-500 max-w-sm text-lg leading-relaxed">
               Fast. Reliable. Instant Home Services. Delivered to your doorstep in minutes.
