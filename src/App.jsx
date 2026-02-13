@@ -5,12 +5,14 @@ import BookingFlow from "./BookingFlow";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/book" element={<BookingFlow />} />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/book" element={<BookingFlow />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 

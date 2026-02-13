@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from './context/AuthContext';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { 
   ArrowRight, 
@@ -76,6 +77,8 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const { currentUser, googleSignIn, logOut } = useAuth();
+
   return (
     <nav
       className={cn(
@@ -93,12 +96,36 @@ const Navbar = () => {
           <a href="#how-it-works" className="text-sm font-medium text-gray-600 hover:text-black transition-colors">How it Works</a>
           <a href="#services" className="text-sm font-medium text-gray-600 hover:text-black transition-colors">Services</a>
           <a href="#features" className="text-sm font-medium text-gray-600 hover:text-black transition-colors">Why Us</a>
-          <button 
-            onClick={() => navigate('/book')}
-            className="bg-black text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-gray-800 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0"
-          >
-            Book Instantly
-          </button>
+          {currentUser ? (
+              <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-3 bg-white/50 backdrop-blur-sm pl-2 pr-4 py-1.5 rounded-full border border-gray-200">
+                      {currentUser.photoURL ? (
+                          <img src={currentUser.photoURL} alt="Profile" className="w-8 h-8 rounded-full border border-gray-300" />
+                      ) : (
+                          <div className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center font-bold">
+                              {currentUser.displayName ? currentUser.displayName[0] : 'U'}
+                          </div>
+                      )}
+                      <div className="flex flex-col">
+                          <span className="text-sm font-bold leading-tight">{currentUser.displayName}</span>
+                          <span className="text-[10px] text-gray-500 leading-tight">{currentUser.email}</span>
+                      </div>
+                  </div>
+                  <button 
+                      onClick={() => logOut()}
+                      className="text-sm font-medium text-red-600 hover:text-red-700 transition-colors"
+                  >
+                      Logout
+                  </button>
+              </div>
+          ) : (
+            <button 
+                onClick={() => googleSignIn()}
+                className="bg-black text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-gray-800 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0"
+            >
+                Login with Google
+            </button>
+          )}
         </div>
 
         {/* Mobile Toggle */}
