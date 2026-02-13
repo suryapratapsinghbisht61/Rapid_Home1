@@ -120,10 +120,10 @@ const Navbar = () => {
               </div>
           ) : (
             <button 
-                onClick={() => googleSignIn()}
+                onClick={() => navigate('/login')}
                 className="bg-black text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-gray-800 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0"
             >
-                Login with Google
+                Login
             </button>
           )}
         </div>

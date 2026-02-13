@@ -20,17 +20,26 @@ export function AuthProvider({ children }) {
     setLoading(false);
   }, []);
 
-  // MOCK Sign in with Google (Simulated for Demo)
-  const googleSignIn = () => {
+  const login = (provider) => {
     setLoading(true);
     // Simulate network delay
     setTimeout(() => {
-        const mockUser = {
+        let mockUser = {
             uid: "demo-123",
             displayName: "Alex Johnson",
             email: "alex@rapidhome.demo",
-            photoURL: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+            photoURL: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+            provider: provider // 'google', 'facebook', or 'twitter'
         };
+
+        if (provider === 'facebook') {
+            mockUser.displayName = "Alex (FB)";
+            mockUser.photoURL = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/2021_Facebook_icon.svg/2048px-2021_Facebook_icon.svg.png"; // FB Logo placeholder
+        } else if (provider === 'twitter') {
+             mockUser.displayName = "@alex_j";
+             mockUser.photoURL = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Logo_of_Twitter.svg/512px-Logo_of_Twitter.svg.png"; // Twitter Logo placeholder
+        }
+
         setCurrentUser(mockUser);
         localStorage.setItem("rapid_home_user", JSON.stringify(mockUser));
         setLoading(false);
@@ -45,7 +54,7 @@ export function AuthProvider({ children }) {
 
   const value = {
     currentUser,
-    googleSignIn,
+    login,
     logOut
   };
 
